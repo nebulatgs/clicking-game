@@ -1,5 +1,6 @@
 <script lang="ts">
 	const ROUNDS = 4;
+	const MIN_WAIT_MS = 1_000;
 	const MAX_WAIT_MS = 5_000;
 
 	enum State {
@@ -42,7 +43,7 @@
 			timeoutId = setTimeout(() => {
 				state = State.Click;
 				startTime = Date.now();
-			}, Math.random() * MAX_WAIT_MS);
+			}, Math.random() * (MAX_WAIT_MS - MIN_WAIT_MS) + MIN_WAIT_MS);
 		} else {
 			state = State.GameEnd;
 			currentRound = 0;
@@ -82,8 +83,8 @@
 <div
 	tabIndex={0}
 	class="{colors[state]} grid place-items-center w-screen h-screen"
-	on:click={click}
-	on:keypress={click}
+	on:mousedown={click}
+	on:keydown={click}
 >
 	<h1 class="text-6xl font-semibold select-none text-white">
 		{texts[state]}
