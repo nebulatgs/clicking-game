@@ -1,4 +1,9 @@
 <script lang="ts">
+	function keyIs(code: string) {
+		return (fn: (e: KeyboardEvent) => unknown) => (e: KeyboardEvent) =>
+			e.code === code ? fn(e) : null;
+	}
+
 	const ROUNDS = 4;
 	const MIN_WAIT_MS = 1_000;
 	const MAX_WAIT_MS = 5_000;
@@ -84,7 +89,7 @@
 	tabIndex={0}
 	class="{colors[state]} grid place-items-center w-screen h-screen"
 	on:mousedown={click}
-	on:keydown={click}
+	on:keydown={keyIs('Space')(click)}
 >
 	<h1 class="text-6xl font-semibold select-none text-white">
 		{texts[state]}
